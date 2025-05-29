@@ -3,556 +3,601 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>日在召实 - 曹东旺的冒险</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>日在召实 - Day in ShaoShi</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Microsoft YaHei', 'Segoe UI', sans-serif;
+            font-family: 'Microsoft YaHei', sans-serif;
         }
         
         body {
-            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
+            background-color: #1a1a2e;
+            color: #e6e6e6;
+            overflow: hidden;
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
-            color: white;
-            position: relative;
+            background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                              radial-gradient(circle at center, #4e54c8, #1a1a2e);
         }
         
-        body::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
+        #game-container {
             width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, transparent 20%, #000 150%);
-            opacity: 0.7;
-            z-index: -1;
-        }
-        
-        .game-container {
-            width: 95%;
             max-width: 1200px;
-            height: 90vh;
-            background: rgba(10, 15, 35, 0.85);
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            height: 85vh;
+            background-color: rgba(10, 10, 20, 0.85);
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(78, 84, 200, 0.6);
             overflow: hidden;
+            position: relative;
             display: flex;
             flex-direction: column;
-            position: relative;
-            border: 3px solid #4a6fc7;
         }
         
-        .header {
-            background: linear-gradient(90deg, #0d1b3a, #1a3a7a, #0d1b3a);
-            padding: 15px 30px;
+        #game-header {
+            background: linear-gradient(to right, #2d2d5e, #4e54c8);
+            padding: 15px 25px;
             text-align: center;
-            border-bottom: 2px solid #4a6fc7;
-            position: relative;
+            border-bottom: 2px solid #f8f9fa;
         }
         
-        .title {
-            font-size: 2.8rem;
+        #game-title {
+            font-size: 2.2rem;
             font-weight: bold;
-            background: linear-gradient(to right, #ffd700, #ff8c00);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
             letter-spacing: 2px;
         }
         
-        .subtitle {
-            font-size: 1.2rem;
-            color: #aaccff;
-            margin-top: 5px;
-            letter-spacing: 1px;
-        }
-        
-        .game-content {
-            display: flex;
+        #game-content {
             flex: 1;
+            display: flex;
             overflow: hidden;
-        }
-        
-        .scene-container {
-            flex: 3;
             position: relative;
-            overflow: hidden;
-            background: linear-gradient(rgba(20, 30, 60, 0.8), rgba(10, 15, 35, 0.9));
         }
         
-        .background-image {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0.8;
-            transition: opacity 1s ease;
-        }
-        
-        .character {
-            position: absolute;
-            bottom: 0;
-            height: 85%;
-            transition: all 0.5s ease;
-            filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.7));
-        }
-        
-        .character-left {
-            left: 5%;
-        }
-        
-        .character-right {
-            right: 5%;
-        }
-        
-        .dialog-box {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            background: rgba(10, 15, 35, 0.9);
-            border-top: 3px solid #4a6fc7;
+        #character-section {
+            width: 25%;
+            min-width: 250px;
             padding: 20px;
-            min-height: 30%;
-            backdrop-filter: blur(5px);
-        }
-        
-        .character-name {
-            color: #ffcc00;
-            font-size: 1.8rem;
-            font-weight: bold;
-            margin-bottom: 15px;
-            text-shadow: 0 0 5px rgba(255, 204, 0, 0.5);
-            display: inline-block;
-            padding: 5px 15px;
-            background: rgba(30, 45, 90, 0.7);
-            border-radius: 10px;
-            border-left: 4px solid #ffcc00;
-        }
-        
-        .dialog-text {
-            font-size: 1.4rem;
-            line-height: 1.6;
-            color: #e6f7ff;
-            min-height: 100px;
-        }
-        
-        .choices-container {
+            border-right: 1px solid #4e54c8;
             display: flex;
             flex-direction: column;
+            align-items: center;
+            background-color: rgba(15, 15, 35, 0.7);
+        }
+        
+        #character-image {
+            width: 200px;
+            height: 300px;
+            border: 3px solid #4e54c8;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            background: linear-gradient(45deg, #2d2d5e, #1a1a2e);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        
+        #character-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        #character-info {
+            text-align: center;
+            width: 100%;
+        }
+        
+        #character-name {
+            font-size: 1.8rem;
+            color: #ffcc00;
+            margin-bottom: 10px;
+            text-shadow: 0 0 5px rgba(255, 204, 0, 0.5);
+        }
+        
+        .character-stats {
+            width: 100%;
+            background-color: rgba(45, 45, 94, 0.6);
+            padding: 12px;
+            border-radius: 8px;
+            margin: 8px 0;
+            text-align: left;
+        }
+        
+        .stat-bar {
+            height: 10px;
+            background-color: #333;
+            border-radius: 5px;
+            margin-top: 5px;
+            overflow: hidden;
+        }
+        
+        .stat-fill {
+            height: 100%;
+            background: linear-gradient(to right, #ff6b6b, #ffcc00);
+            border-radius: 5px;
+        }
+        
+        #dialogue-section {
+            flex: 1;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="rgba(20,20,40,0.3)"/><path d="M0 50 Q 25 30, 50 50 T 100 50" stroke="rgba(78,84,200,0.1)" stroke-width="1" fill="none"/></svg>');
+        }
+        
+        #scene-description {
+            min-height: 150px;
+            background-color: rgba(0, 0, 0, 0.6);
+            border: 1px solid #4e54c8;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            overflow-y: auto;
+        }
+        
+        #dialogue-box {
+            flex: 1;
+            background-color: rgba(0, 0, 0, 0.7);
+            border: 2px solid #4e54c8;
+            border-radius: 10px;
+            padding: 20px;
+            font-size: 1.2rem;
+            line-height: 1.6;
+            overflow-y: auto;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+        }
+        
+        #dialogue-text {
+            min-height: 120px;
+        }
+        
+        #choices-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
             gap: 15px;
             margin-top: 20px;
         }
         
         .choice-btn {
-            background: linear-gradient(90deg, #1a3a7a, #2a5ac7);
-            border: none;
-            border-radius: 10px;
+            background: linear-gradient(to right, #4e54c8, #8f94fb);
             color: white;
+            border: none;
             padding: 15px;
-            font-size: 1.3rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
             cursor: pointer;
             transition: all 0.3s ease;
-            text-align: left;
-            border: 2px solid #4a6fc7;
+            text-align: center;
         }
         
         .choice-btn:hover {
-            background: linear-gradient(90deg, #2a5ac7, #3a7aff);
+            background: linear-gradient(to right, #ff6b6b, #ffcc00);
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
         }
         
-        .stats-container {
-            flex: 1;
-            background: rgba(15, 25, 55, 0.9);
-            padding: 20px;
-            border-left: 2px solid #4a6fc7;
-            min-width: 250px;
-            overflow-y: auto;
-        }
-        
-        .stats-title {
-            text-align: center;
-            font-size: 1.8rem;
-            color: #ffcc00;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #4a6fc7;
-        }
-        
-        .stat-item {
-            background: rgba(30, 45, 90, 0.6);
-            padding: 15px;
-            margin-bottom: 15px;
-            border-radius: 10px;
-            border-left: 4px solid #4a6fc7;
-        }
-        
-        .stat-label {
-            font-size: 1.2rem;
-            color: #aaccff;
-            margin-bottom: 5px;
-        }
-        
-        .stat-value {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #ffcc00;
-        }
-        
-        .progress-bar {
-            height: 20px;
-            background: rgba(50, 50, 80, 0.7);
-            border-radius: 10px;
-            margin-top: 5px;
-            overflow: hidden;
-        }
-        
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #1a3a7a, #4a6fc7);
-            border-radius: 10px;
-        }
-        
-        .footer {
-            background: linear-gradient(90deg, #0d1b3a, #1a3a7a, #0d1b3a);
-            padding: 10px 20px;
+        #game-controls {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            border-top: 2px solid #4a6fc7;
+            padding: 15px 25px;
+            background-color: rgba(15, 15, 35, 0.9);
+            border-top: 2px solid #4e54c8;
         }
         
         .control-btn {
-            background: rgba(30, 45, 90, 0.7);
-            border: 2px solid #4a6fc7;
-            color: #aaccff;
+            background: linear-gradient(to right, #2d2d5e, #4e54c8);
+            color: white;
+            border: none;
             padding: 10px 20px;
-            border-radius: 50px;
+            border-radius: 5px;
             cursor: pointer;
-            font-size: 1.1rem;
+            font-size: 1rem;
             transition: all 0.3s ease;
         }
         
         .control-btn:hover {
-            background: rgba(60, 85, 150, 0.7);
-            color: white;
+            background: linear-gradient(to right, #ff6b6b, #ffcc00);
+            box-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
         }
         
-        .save-load-container {
+        #page-indicator {
             display: flex;
+            align-items: center;
             gap: 10px;
         }
         
-        .status-info {
-            font-size: 1.2rem;
-            color: #aaccff;
+        .page-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #4e54c8;
+            cursor: pointer;
         }
         
-        /* 动画效果 */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        .page-dot.active {
+            background-color: #ffcc00;
+            transform: scale(1.3);
         }
         
-        .fade-in {
-            animation: fadeIn 0.8s ease forwards;
+        #notification {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(to right, #ff6b6b, #ffcc00);
+            color: #1a1a2e;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transform: translateX(150%);
+            transition: transform 0.5s ease;
         }
         
-        @keyframes slideIn {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+        #notification.show {
+            transform: translateX(0);
         }
         
-        .slide-in {
-            animation: slideIn 0.5s ease forwards;
+        .typing-cursor {
+            display: inline-block;
+            width: 8px;
+            height: 1.2rem;
+            background-color: #ffcc00;
+            margin-left: 4px;
+            animation: blink 1s infinite;
         }
         
-        /* 响应式设计 */
-        @media (max-width: 768px) {
-            .game-content {
-                flex-direction: column;
-            }
-            
-            .stats-container {
-                min-width: 100%;
-                max-height: 200px;
-                border-left: none;
-                border-top: 2px solid #4a6fc7;
-            }
-            
-            .title {
-                font-size: 2rem;
-            }
-            
-            .character {
-                height: 70%;
-            }
-            
-            .dialog-text {
-                font-size: 1.2rem;
-            }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
+        #bg-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, transparent 0%, rgba(10,10,20,0.9) 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        #bg-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0.3;
+            z-index: 0;
+        }
+        
+        .scene-title {
+            text-align: center;
+            font-size: 1.8rem;
+            color: #ffcc00;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(255, 204, 0, 0.7);
+        }
+        
+        .highlight {
+            color: #ffcc00;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <div class="game-container">
-        <div class="header">
-            <div class="title">日在召实</div>
-            <div class="subtitle">曹东旺的校园冒险</div>
+    <div id="game-container">
+        <div id="bg-image"></div>
+        <div id="bg-overlay"></div>
+        
+        <div id="game-header">
+            <h1 id="game-title">日在召实 (Day in ShaoShi)</h1>
         </div>
         
-        <div class="game-content">
-            <div class="scene-container">
-                <img src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="校园背景" class="background-image">
-                <img src="https://i.pravatar.cc/400?img=5" alt="曹东旺" class="character character-left">
-                <img src="https://i.pravatar.cc/400?img=8" alt="同学" class="character character-right">
-                
-                <div class="dialog-box">
-                    <div class="character-name">曹东旺</div>
-                    <div class="dialog-text" id="dialog-text">
-                        又是一个普通的早晨，我站在召实学院的校门口。今天会有什么在等着我呢？是平淡无奇的一天，还是充满惊喜的冒险？
+        <div id="game-content">
+            <div id="character-section">
+                <div id="character-image">
+                    <div style="color: #4e54c8; font-size: 1.2rem; text-align: center;">
+                        角色立绘区域<br>
+                        <span style="font-size: 0.9rem; color: #ffcc00;">(曹东旺图像)</span>
                     </div>
-                    
-                    <div class="choices-container" id="choices-container">
-                        <button class="choice-btn slide-in" onclick="selectChoice(1)">直接去教室上课</button>
-                        <button class="choice-btn slide-in" onclick="selectChoice(2)">先去食堂吃早餐</button>
-                        <button class="choice-btn slide-in" onclick="selectChoice(3)">到操场晨练</button>
+                </div>
+                <div id="character-info">
+                    <h2 id="character-name">曹东旺</h2>
+                    <div class="character-stats">
+                        健康值: 85/100
+                        <div class="stat-bar">
+                            <div class="stat-fill" style="width: 85%;"></div>
+                        </div>
+                    </div>
+                    <div class="character-stats">
+                        精力值: 70/100
+                        <div class="stat-bar">
+                            <div class="stat-fill" style="width: 70%;"></div>
+                        </div>
+                    </div>
+                    <div class="character-stats">
+                        心情值: 90/100
+                        <div class="stat-bar">
+                            <div class="stat-fill" style="width: 90%;"></div>
+                        </div>
+                    </div>
+                    <div class="character-stats">
+                        魅力值: 80/100
+                        <div class="stat-bar">
+                            <div class="stat-fill" style="width: 80%;"></div>
+                        </div>
                     </div>
                 </div>
             </div>
             
-            <div class="stats-container">
-                <div class="stats-title">角色状态</div>
-                
-                <div class="stat-item">
-                    <div class="stat-label">姓名</div>
-                    <div class="stat-value">曹东旺</div>
+            <div id="dialogue-section">
+                <div id="scene-description">
+                    <div class="scene-title">第一章：召实学园的早晨</div>
+                    <p>清晨的阳光透过窗帘洒在房间内，<span class="highlight">曹东旺</span>慢慢睁开双眼。今天是转学到召实学园的第一天，空气中弥漫着樱花的香气和未知的可能性。</p>
+                    <p>窗外可以看到学生们三三两两地走向教学楼，远处钟楼的指针指向7:30分。</p>
                 </div>
                 
-                <div class="stat-item">
-                    <div class="stat-label">体力</div>
-                    <div class="stat-value">85/100</div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 85%"></div>
+                <div id="dialogue-box">
+                    <div id="dialogue-text">
+                        （内心独白）新学校的第一天...不知道会遇到什么样的人和事呢？希望一切顺利。
                     </div>
                 </div>
                 
-                <div class="stat-item">
-                    <div class="stat-label">智力</div>
-                    <div class="stat-value">92/100</div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 92%"></div>
-                    </div>
-                </div>
-                
-                <div class="stat-item">
-                    <div class="stat-label">魅力</div>
-                    <div class="stat-value">78/100</div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 78%"></div>
-                    </div>
-                </div>
-                
-                <div class="stat-item">
-                    <div class="stat-label">当前章节</div>
-                    <div class="stat-value">第一章：召实之晨</div>
-                </div>
-                
-                <div class="stat-item">
-                    <div class="stat-label">故事进度</div>
-                    <div class="stat-value">15%</div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 15%"></div>
-                    </div>
+                <div id="choices-container">
+                    <button class="choice-btn" onclick="selectChoice(1)">快速起床准备</button>
+                    <button class="choice-btn" onclick="selectChoice(2)">再躺五分钟</button>
+                    <button class="choice-btn" onclick="selectChoice(3)">检查手机信息</button>
+                    <button class="choice-btn" onclick="selectChoice(4)">打开窗户看风景</button>
                 </div>
             </div>
         </div>
         
-        <div class="footer">
-            <div class="save-load-container">
-                <button class="control-btn"><i class="fas fa-save"></i> 保存</button>
-                <button class="control-btn"><i class="fas fa-folder-open"></i> 读取</button>
+        <div id="game-controls">
+            <button class="control-btn" onclick="saveGame()">保存进度</button>
+            <div id="page-indicator">
+                <div class="page-dot active"></div>
+                <div class="page-dot"></div>
+                <div class="page-dot"></div>
+                <div class="page-dot"></div>
+                <div class="page-dot"></div>
             </div>
-            <div class="status-info">自动保存: 10:25 AM</div>
-            <button class="control-btn"><i class="fas fa-cog"></i> 设置</button>
+            <button class="control-btn" onclick="loadGame()">读取进度</button>
         </div>
+        
+        <div id="notification">游戏已保存！</div>
     </div>
 
     <script>
         // 游戏状态
         const gameState = {
-            chapter: 1,
-            scene: 1,
-            energy: 85,
-            intelligence: 92,
-            charm: 78,
-            choices: []
+            currentPage: 1,
+            health: 85,
+            energy: 70,
+            mood: 90,
+            charm: 80,
+            day: 1,
+            location: "dormitory"
         };
         
-        // 游戏文本
-        const gameText = [
+        // 场景数据
+        const scenes = [
             {
-                scene: 1,
-                character: "曹东旺",
-                text: "又是一个普通的早晨，我站在召实学院的校门口。今天会有什么在等着我呢？是平淡无奇的一天，还是充满惊喜的冒险？",
+                title: "第一章：召实学园的早晨",
+                description: "清晨的阳光透过窗帘洒在房间内，曹东旺慢慢睁开双眼。今天是转学到召实学园的第一天，空气中弥漫着樱花的香气和未知的可能性。窗外可以看到学生们三三两两地走向教学楼，远处钟楼的指针指向7:30分。",
+                dialogue: "（内心独白）新学校的第一天...不知道会遇到什么样的人和事呢？希望一切顺利。",
                 choices: [
-                    { id: 1, text: "直接去教室上课" },
-                    { id: 2, text: "先去食堂吃早餐" },
-                    { id: 3, text: "到操场晨练" }
+                    "快速起床准备",
+                    "再躺五分钟",
+                    "检查手机信息",
+                    "打开窗户看风景"
                 ]
             },
             {
-                scene: 2,
-                character: "曹东旺",
-                text: "我决定直接去教室。走在安静的走廊上，我思考着今天要学习的课程内容...",
+                title: "教学楼走廊的相遇",
+                description: "曹东旺匆忙赶到教学楼，在走廊转角处不小心撞到了一位抱着书本的女同学。书本散落一地，周围的学生们投来好奇的目光。",
+                dialogue: "啊！对不起，我不是故意的...我帮你捡起来！",
                 choices: [
-                    { id: 4, text: "认真预习课程内容" },
-                    { id: 5, text: "和旁边的同学聊天" },
-                    { id: 6, text: "小憩一会儿" }
+                    "快速帮忙捡书本",
+                    "先自我介绍道歉",
+                    "开个玩笑缓解气氛",
+                    "指出对方也有责任"
                 ]
             },
             {
-                scene: 3,
-                character: "曹东旺",
-                text: "食堂的早餐香气扑鼻，我点了一份豆浆油条。找个位置坐下时，我注意到...",
+                title: "午休时分的食堂",
+                description: "午餐时间，食堂里挤满了学生。曹东旺端着餐盘寻找座位时，看到早上遇到的那位女同学独自坐在窗边的位置。",
+                dialogue: "（犹豫）要不要过去打招呼呢？早上那么尴尬，她可能还在生气吧...",
                 choices: [
-                    { id: 7, text: "独自享受早餐" },
-                    { id: 8, text: "和认识的同学打招呼" },
-                    { id: 9, text: "尝试和新面孔交谈" }
+                    "鼓起勇气走过去",
+                    "找个其他位置坐下",
+                    "买饮料给她送过去",
+                    "假装没看见"
                 ]
             },
             {
-                scene: 4,
-                character: "曹东旺",
-                text: "清晨的操场空气清新，我做了几组拉伸运动。这时，我看到...",
+                title: "放学后的邀请",
+                description: "放学铃声响起，曹东旺正在整理书包时，早上的女同学走了过来。夕阳透过窗户把她的头发染成金色，她看起来有些紧张。",
+                dialogue: "那个...曹同学，今天早上谢谢你帮我捡书本。如果你有空的话...要不要一起去喝点东西？",
                 choices: [
-                    { id: 10, text: "加入篮球场上的比赛" },
-                    { id: 11, text: "沿着跑道慢跑" },
-                    { id: 12, text: "练习单杠" }
+                    "欣然接受邀请",
+                    "犹豫后答应",
+                    "礼貌地拒绝",
+                    "提议改天"
+                ]
+            },
+            {
+                title: "河畔的黄昏",
+                description: "两人来到学校附近的河畔咖啡厅，夕阳把河水染成金黄色。微风轻拂，气氛宁静而美好。",
+                dialogue: "其实...我今天早上是故意站在那里的。从你转学来的第一天，我就注意到你了...",
+                choices: [
+                    "表达同样的好感",
+                    "惊讶地询问原因",
+                    "害羞地转移话题",
+                    "开个玩笑回应"
                 ]
             }
         ];
         
-        // 选择处理函数
-        function selectChoice(choiceId) {
-            const choicesContainer = document.getElementById('choices-container');
-            const dialogText = document.getElementById('dialog-text');
+        // 更新页面指示器
+        function updatePageIndicator() {
+            const dots = document.querySelectorAll('.page-dot');
+            dots.forEach((dot, index) => {
+                if (index === gameState.currentPage - 1) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
+        
+        // 显示通知
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.classList.add('show');
             
-            // 清除现有选项
-            choicesContainer.innerHTML = '';
-            
-            // 根据选择推进剧情
-            let nextScene = 1;
-            let response = "";
-            
-            switch(choiceId) {
-                case 1:
-                    nextScene = 2;
-                    response = "我决定直接去教室。走在安静的走廊上，我思考着今天要学习的课程内容...";
-                    break;
-                case 2:
-                    nextScene = 3;
-                    response = "食堂的早餐香气扑鼻，我点了一份豆浆油条。找个位置坐下时，我注意到...";
-                    break;
-                case 3:
-                    nextScene = 4;
-                    response = "清晨的操场空气清新，我做了几组拉伸运动。这时，我看到...";
-                    break;
-                case 4:
-                    response = "我打开课本，开始预习今天的课程。这些知识虽然有些难度，但经过认真思考后，我逐渐理解了其中的奥妙。";
-                    gameState.intelligence += 3;
-                    break;
-                case 5:
-                    response = "我和旁边的同学聊起了昨晚的篮球比赛，讨论得热火朝天。虽然耽误了一些预习时间，但感觉同学关系更亲近了。";
-                    gameState.charm += 2;
-                    break;
-                case 6:
-                    response = "我趴在桌子上小憩，结果不小心睡过了头，被老师点名时才惊醒，有点尴尬。";
-                    gameState.energy += 5;
-                    gameState.charm -= 1;
-                    break;
-                default:
-                    response = "我继续在召实学院的旅程，前方还有什么在等着我呢？";
-            }
-            
-            // 更新游戏状态
-            gameState.scene = nextScene;
-            gameState.choices.push(choiceId);
-            
-            // 显示响应文本
-            dialogText.textContent = response;
-            
-            // 添加继续按钮
             setTimeout(() => {
-                const continueBtn = document.createElement('button');
-                continueBtn.className = 'choice-btn slide-in';
-                continueBtn.textContent = '继续';
-                continueBtn.onclick = () => loadScene(nextScene);
-                choicesContainer.appendChild(continueBtn);
-            }, 1500);
+                notification.classList.remove('show');
+            }, 3000);
         }
         
-        // 加载场景
-        function loadScene(sceneId) {
-            const scene = gameText.find(s => s.scene === sceneId);
-            if (!scene) return;
+        // 选择选项
+        function selectChoice(choiceIndex) {
+            const choiceText = scenes[gameState.currentPage - 1].choices[choiceIndex - 1];
+            const dialogueBox = document.getElementById('dialogue-text');
             
-            const characterName = document.querySelector('.character-name');
-            const dialogText = document.getElementById('dialog-text');
+            // 更新角色状态
+            gameState.health += Math.floor(Math.random() * 5) - 2;
+            gameState.energy += Math.floor(Math.random() * 5) - 3;
+            gameState.mood += Math.floor(Math.random() * 7) - 2;
+            gameState.charm += Math.floor(Math.random() * 4) - 1;
+            
+            // 确保数值在合理范围内
+            gameState.health = Math.max(0, Math.min(100, gameState.health));
+            gameState.energy = Math.max(0, Math.min(100, gameState.energy));
+            gameState.mood = Math.max(0, Math.min(100, gameState.mood));
+            gameState.charm = Math.max(0, Math.min(100, gameState.charm));
+            
+            // 更新状态显示
+            document.querySelectorAll('.stat-fill')[0].style.width = `${gameState.health}%`;
+            document.querySelectorAll('.stat-fill')[1].style.width = `${gameState.energy}%`;
+            document.querySelectorAll('.stat-fill')[2].style.width = `${gameState.mood}%`;
+            document.querySelectorAll('.stat-fill')[3].style.width = `${gameState.charm}%`;
+            
+            // 显示玩家选择
+            dialogueBox.innerHTML = `（曹东旺选择：${choiceText}）`;
+            
+            // 延迟后推进剧情
+            setTimeout(() => {
+                if (gameState.currentPage < scenes.length) {
+                    gameState.currentPage++;
+                    updateScene();
+                } else {
+                    dialogueBox.innerHTML = "（游戏第一章结束，更多内容敬请期待...）";
+                    document.getElementById('choices-container').innerHTML = '';
+                }
+            }, 1500);
+            
+            // 显示通知
+            showNotification(`选择已记录: ${choiceText}`);
+        }
+        
+        // 更新场景
+        function updateScene() {
+            const currentScene = scenes[gameState.currentPage - 1];
+            
+            document.querySelector('.scene-title').textContent = currentScene.title;
+            document.getElementById('scene-description').innerHTML = 
+                `<div class="scene-title">${currentScene.title}</div><p>${currentScene.description}</p>`;
+                
+            document.getElementById('dialogue-text').textContent = currentScene.dialogue;
+            
             const choicesContainer = document.getElementById('choices-container');
-            
-            // 更新文本
-            characterName.textContent = scene.character;
-            dialogText.textContent = scene.text;
-            
-            // 清空选项
             choicesContainer.innerHTML = '';
             
-            // 添加新选项
-            scene.choices.forEach(choice => {
-                const choiceBtn = document.createElement('button');
-                choiceBtn.className = 'choice-btn slide-in';
-                choiceBtn.textContent = choice.text;
-                choiceBtn.onclick = () => selectChoice(choice.id);
-                choicesContainer.appendChild(choiceBtn);
+            currentScene.choices.forEach((choice, index) => {
+                const button = document.createElement('button');
+                button.className = 'choice-btn';
+                button.textContent = choice;
+                button.onclick = () => selectChoice(index + 1);
+                choicesContainer.appendChild(button);
             });
             
-            // 更新背景和角色（在实际游戏中，这里会根据场景更换图片）
-            const backgrounds = [
-                'https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80',
-                'https://images.unsplash.com/photo-1543269865-cbf427effbad?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80',
-                'https://images.unsplash.com/photo-1514933651103-005eec06c04b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80',
-                'https://images.unsplash.com/photo-1541746972996-4e0b0f43e02a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80'
-            ];
+            // 更新页面指示器
+            updatePageIndicator();
             
-            const bgImage = document.querySelector('.background-image');
-            bgImage.src = backgrounds[sceneId - 1];
-            bgImage.classList.add('fade-in');
-            setTimeout(() => bgImage.classList.remove('fade-in'), 1000);
+            // 更新背景
+            const bgImage = document.getElementById('bg-image');
+            const bgImages = [
+                'linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c)',
+                'linear-gradient(135deg, #3a7bd5, #00d2ff)',
+                'linear-gradient(135deg, #ff7e5f, #feb47b)',
+                'linear-gradient(135deg, #614385, #516395)',
+                'linear-gradient(135deg, #ff6b6b, #ffcc00)'
+            ];
+            bgImage.style.backgroundImage = bgImages[gameState.currentPage - 1];
         }
         
-        // 初始化游戏
-        window.onload = function() {
-            // 初始场景
-            loadScene(1);
-            
-            // 添加一些动画效果
-            const characters = document.querySelectorAll('.character');
-            characters.forEach((char, index) => {
-                setTimeout(() => {
-                    char.style.opacity = '1';
-                }, 500 + index * 300);
-            });
-        };
+        // 保存游戏
+        function saveGame() {
+            localStorage.setItem('dayInShaoShiSave', JSON.stringify(gameState));
+            showNotification("游戏进度已保存！");
+        }
+        
+        // 读取游戏
+        function loadGame() {
+            const saveData = localStorage.getItem('dayInShaoShiSave');
+            if (saveData) {
+                const savedState = JSON.parse(saveData);
+                Object.assign(gameState, savedState);
+                updateScene();
+                showNotification("游戏进度已加载！");
+            } else {
+                showNotification("没有找到保存文件");
+            }
+        }
+        
+        // 初始更新
+        updatePageIndicator();
+        
+        // 添加打字效果
+        const dialogueText = document.getElementById('dialogue-text');
+        const originalText = dialogueText.textContent;
+        dialogueText.textContent = '';
+        
+        let charIndex = 0;
+        function typeText() {
+            if (charIndex < originalText.length) {
+                dialogueText.textContent += originalText.charAt(charIndex);
+                charIndex++;
+                setTimeout(typeText, 30);
+            } else {
+                // 添加闪烁光标
+                const cursor = document.createElement('span');
+                cursor.className = 'typing-cursor';
+                dialogueText.appendChild(cursor);
+            }
+        }
+        
+        // 开始打字效果
+        setTimeout(typeText, 1000);
     </script>
 </body>
 </html>
